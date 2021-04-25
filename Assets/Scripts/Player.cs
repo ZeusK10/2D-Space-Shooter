@@ -9,6 +9,11 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
+    private GameObject _enemyPrefab;
+    [SerializeField]
+    private int _Lives = 3;
+
+    [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = 0.0f;
     // Start is called before the first frame update
@@ -16,13 +21,16 @@ public class Player : MonoBehaviour
     {
         //Set the starting position to the origin
         transform.position = new Vector3(0, 0, 0);
+
+        float randomNumber = Random.Range(-9.0f, 9.1f);
+        Instantiate(_enemyPrefab, new Vector3(randomNumber, 9, 0), Quaternion.identity);
     }
 
     // Update is called once per frame
     void Update()
     {
         PlayerMovement();
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time>_canFire)
         {
             FireLaser();
         }
@@ -49,8 +57,18 @@ public class Player : MonoBehaviour
 
     void FireLaser()
     {   
-            _canFire = Time.time + _fireRate;
-            Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity); 
+        _canFire = Time.time + _fireRate;
+        Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.8f, 0), Quaternion.identity);
+    }
+
+    public void Damage()
+    {
+        _Lives -= 1;
+
+        if(_Lives<1)
+        {
+            Destroy(this.gameObject);
+        }
     }
 }
 

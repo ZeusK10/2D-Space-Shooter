@@ -6,10 +6,7 @@ public class Laser : MonoBehaviour
 {
     [SerializeField]
     private int _speed = 8;
-    private void Start()
-    {
-       // transform.position = new Vector3(transform.position.x, transform.position.y+0.8f, 0);
-    }
+    
     void Update()
     {
         
