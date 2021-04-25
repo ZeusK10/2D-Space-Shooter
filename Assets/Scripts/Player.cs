@@ -9,21 +9,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
-    private GameObject _enemyPrefab;
+    private SpawnManager _spawnManager;
+    
     [SerializeField]
     private int _Lives = 3;
 
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = 0.0f;
-    // Start is called before the first frame update
+
     void Start()
     {
-        //Set the starting position to the origin
         transform.position = new Vector3(0, 0, 0);
 
-        float randomNumber = Random.Range(-9.0f, 9.1f);
-        Instantiate(_enemyPrefab, new Vector3(randomNumber, 9, 0), Quaternion.identity);
+        _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
     }
 
     // Update is called once per frame
@@ -67,6 +66,7 @@ public class Player : MonoBehaviour
 
         if(_Lives<1)
         {
+            _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
         }
     }
