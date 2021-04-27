@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
+    [SerializeField]
+    private int powerupID;
     void Update()
     {
         transform.Translate(Vector3.down * 3f * Time.deltaTime);
@@ -20,10 +22,29 @@ public class Powerup : MonoBehaviour
             Player player = collision.transform.GetComponent<Player>();
             if (player!=null)
             {
-                player.TripleShot();
-                
+                switch (powerupID)
+                {
+                    case 0:
+                        player.TripleShot();
+                        break;
+
+                    case 1:
+                        player.SpeedPowerup();
+                        break;
+
+                    case 2:
+                        player.ShieldPowerup();
+                        break;
+
+                    default:
+                        Debug.Log("No ID detected");
+                        break;
+                }
             }
             Destroy(gameObject);
         }
     }
 }
+
+
+

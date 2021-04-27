@@ -14,9 +14,20 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     [SerializeField]
     private bool isTripleShotActive = false;
-    
+
+    [SerializeField]
+    private bool isSpeedPowerupActive = false;
+
+    [SerializeField]
+    private bool isShieldPowerupActive = false;
+
+    [SerializeField]
+    private GameObject _shield;
+
     [SerializeField]
     private int _Lives = 3;
+
+    private int _speedMultiplier = 2;
 
     [SerializeField]
     private float _fireRate = 0.5f;
@@ -37,6 +48,7 @@ public class Player : MonoBehaviour
         {
             FireLaser();
         }
+        
     }
 
     void PlayerMovement()
@@ -44,7 +56,16 @@ public class Player : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput,verticalInput, 0);
-        transform.Translate(direction * _speed * Time.deltaTime);
+
+        if(isSpeedPowerupActive)
+        {
+            transform.Translate(direction * _speed * _speedMultiplier * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(direction * _speed * Time.deltaTime);
+        }
+        
 
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.9f, 0), 0);
@@ -74,13 +95,23 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        _Lives -= 1;
-
-        if(_Lives<1)
+        if(isShieldPowerupActive)
         {
-            _spawnManager.OnPlayerDeath();
-            Destroy(this.gameObject);
+            isShieldPowerupActive = false;
+            _shield.SetActive(false);
+            
         }
+        else
+        {
+            _Lives -= 1;
+
+            if (_Lives < 1)
+            {
+                _spawnManager.OnPlayerDeath();
+                Destroy(this.gameObject);
+            }
+        }
+        
     }
     public void TripleShot()
     {
@@ -88,12 +119,35 @@ public class Player : MonoBehaviour
         StartCoroutine(TripleShotPowerDownRoutine());
     }
 
+    public void SpeedPowerup()
+    {
+        isSpeedPowerupActive = true;
+        
+        StartCoroutine(SpeedPowerDownRoutine());
+
+    }
+
+    public void ShieldPowerup()
+    {
+        _shield.SetActive(true);
+        isShieldPowerupActive = true;
+    }
+
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5f);
         isTripleShotActive = false;
     }
+
+    IEnumerator SpeedPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+        isSpeedPowerupActive = false;
+    }
+
 }
+
+
 
 
 
