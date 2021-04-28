@@ -8,10 +8,21 @@ public class Enemy : MonoBehaviour
     private float _speed = 4f;
    
     private Player player;
+    private Animator _animation;
 
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
+        if(player==null)
+        {
+            Debug.Log("Player is null");
+        }
+
+        _animation = gameObject.GetComponent<Animator>();
+        if(_animation==null)
+        {
+            Debug.Log("Animator is null");
+        }
     }
 
     void Update()
@@ -34,15 +45,19 @@ public class Enemy : MonoBehaviour
                 player.Damage();
             }
             player.UpdateScore(5);
+            _animation.SetTrigger("IsEnemyDead");
+            _speed = 0f;
             //provide score value 5 when player and enemy collide
-            Destroy(this.gameObject);
+            Destroy(this.gameObject,2.8f);
         }
         else if (other.tag == "Laser")
         {
             player.UpdateScore(10);
             //provide score value 10 when laser hits enemy
             Destroy(other.gameObject);
-            Destroy(this.gameObject);
+            _speed = 0f;
+            _animation.SetTrigger("IsEnemyDead");
+            Destroy(this.gameObject,2.8f);
         }
     }
 }
