@@ -6,7 +6,14 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4f;
-    
+   
+    private Player player;
+
+    private void Start()
+    {
+        player = GameObject.Find("Player").GetComponent<Player>();
+    }
+
     void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -26,10 +33,14 @@ public class Enemy : MonoBehaviour
             {
                 player.Damage();
             }
+            player.UpdateScore(5);
+            //provide score value 5 when player and enemy collide
             Destroy(this.gameObject);
         }
         else if (other.tag == "Laser")
         {
+            player.UpdateScore(10);
+            //provide score value 10 when laser hits enemy
             Destroy(other.gameObject);
             Destroy(this.gameObject);
         }

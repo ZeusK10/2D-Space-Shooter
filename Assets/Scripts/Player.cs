@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private GameObject _tripleShotPrefab;
     [SerializeField]
     private SpawnManager _spawnManager;
+    private UIManager _uIManager;
     [SerializeField]
     private bool isTripleShotActive = false;
 
@@ -32,12 +33,14 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _fireRate = 0.5f;
     private float _canFire = 0.0f;
+    private int _score;
 
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        _uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
     }
 
     // Update is called once per frame
@@ -104,7 +107,7 @@ public class Player : MonoBehaviour
         else
         {
             _Lives -= 1;
-
+            _uIManager.UpdatePlayerLives(_Lives);
             if (_Lives < 1)
             {
                 _spawnManager.OnPlayerDeath();
@@ -143,6 +146,12 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         isSpeedPowerupActive = false;
+    }
+
+    public void UpdateScore(int points)
+    {
+        _score += points;
+        _uIManager.UpdatePlayerScore(_score);
     }
 
 }
