@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour
     private float _speed = 4f;
    
     private Player player;
+
     private Animator _animation;
 
     private void Start()
