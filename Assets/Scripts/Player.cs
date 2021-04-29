@@ -35,6 +35,10 @@ public class Player : MonoBehaviour
     private float _canFire = 0.0f;
     private int _score;
 
+    [SerializeField]
+    private GameObject _playerHurtRight;
+    [SerializeField]
+    private GameObject _playerHurtLeft;
     void Start()
     {
         transform.position = new Vector3(0, 0, 0);
@@ -107,6 +111,7 @@ public class Player : MonoBehaviour
         else
         {
             _Lives -= 1;
+            PlayerHurt();
             _uIManager.UpdatePlayerLives(_Lives);
             if (_Lives < 1)
             {
@@ -116,6 +121,37 @@ public class Player : MonoBehaviour
         }
         
     }
+
+    public void PlayerHurt()
+    {
+        
+            if (_Lives == 2)
+            {
+                _playerHurtLeft.SetActive(true);
+            }
+            else if (_Lives == 1)
+            {
+                _playerHurtRight.SetActive(true);
+            }
+
+        //if (Random.Range(0, 2) == 0 && _isHurt == 0)
+        //{
+        //}
+        //else if()
+        //{
+        //    if (_Lives == 1)
+        //    {
+        //        _playerHurtLeft.SetActive(true);
+        //    }
+        //    else if (_Lives == 2)
+        //    {
+        //        _playerHurtRight.SetActive(true);
+        //    }
+        //}
+        
+        
+    }
+
     public void TripleShot()
     {
         isTripleShotActive = true;
