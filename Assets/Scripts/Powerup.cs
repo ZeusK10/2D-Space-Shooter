@@ -6,6 +6,18 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField]
     private int powerupID;
+
+    private AudioSource _powerupMusic;
+
+    private void Start()
+    {
+        _powerupMusic = GameObject.Find("Powerup_Music").GetComponent<AudioSource>();
+        if (_powerupMusic == null)
+        {
+            Debug.LogError("Powerup Music is null");
+        }
+    }
+
     void Update()
     {
         transform.Translate(Vector3.down * 3f * Time.deltaTime);
@@ -40,6 +52,7 @@ public class Powerup : MonoBehaviour
                         Debug.Log("No ID detected");
                         break;
                 }
+                _powerupMusic.Play();
             }
             Destroy(gameObject);
         }

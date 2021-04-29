@@ -25,6 +25,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _shield;
 
+    private AudioSource _laserAudio;
+
     [SerializeField]
     private int _Lives = 3;
 
@@ -44,7 +46,22 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
 
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        if(_spawnManager==null)
+        {
+            Debug.LogError("_Spawn Manager is null");
+        }
+
         _uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if(_uIManager==null)
+        {
+            Debug.LogError("UI Manager is null");
+        }
+
+        _laserAudio = GameObject.Find("Laser_Music").GetComponent<AudioSource>();
+        if(_laserAudio==null)
+        {
+            Debug.LogError("Audio Source is null");
+        }
     }
 
     // Update is called once per frame
@@ -97,7 +114,7 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
         }
-        
+        _laserAudio.Play();
     }
 
     public void Damage()

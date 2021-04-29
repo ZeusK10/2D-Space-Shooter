@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 4f;
-   
+    private AudioSource _explosionAudio;
     private Player player;
 
     private Animator _animation;
@@ -17,6 +17,12 @@ public class Enemy : MonoBehaviour
         if(player==null)
         {
             Debug.Log("Player is null");
+        }
+
+        _explosionAudio = GameObject.Find("Explosion_Music").GetComponent<AudioSource>();
+        if (_explosionAudio == null)
+        {
+            Debug.LogError("Audio Source is null");
         }
 
         _animation = gameObject.GetComponent<Animator>();
@@ -47,6 +53,7 @@ public class Enemy : MonoBehaviour
             }
             player.UpdateScore(5);
             _animation.SetTrigger("IsEnemyDead");
+            _explosionAudio.Play();
             _speed = 0f;
             //provide score value 5 when player and enemy collide
             Destroy(this.gameObject,2.8f);
@@ -58,6 +65,7 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             _speed = 0f;
             _animation.SetTrigger("IsEnemyDead");
+            _explosionAudio.Play();
             Destroy(this.gameObject,2.8f);
         }
     }
