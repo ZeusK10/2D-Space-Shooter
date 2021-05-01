@@ -23,10 +23,13 @@ public class Player : MonoBehaviour
     private bool isSpeedPowerupActive = false;
 
     [SerializeField]
-    private bool isShieldPowerupActive = false;
+    private int isShieldPowerupActive = 0;
 
     [SerializeField]
     private GameObject _shield;
+
+    [SerializeField]
+    private SpriteRenderer _shieldColor;
 
     private AudioSource _laserAudio;
 
@@ -65,6 +68,8 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Audio Source is null");
         }
+
+        _shieldColor = _shield.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -130,14 +135,29 @@ public class Player : MonoBehaviour
 
     public void Damage()
     {
-        if(isShieldPowerupActive)
+        if(isShieldPowerupActive == 3)
         {
-            isShieldPowerupActive = false;
-            _shield.SetActive(false);
-            
+            //_shieldColor.color = new Color(0, 1, 0, 1);
+            _shieldColor.color = new Color(0, 0, 1, 1);
+            isShieldPowerupActive -= 1;
+             
         }
-        else
+        else if(isShieldPowerupActive == 2)
         {
+            _shieldColor.color = new Color(1, 0, 0, 1);
+            isShieldPowerupActive -= 1;
+           
+        }
+        else if (isShieldPowerupActive == 1)
+        {
+            _shield.SetActive(false);
+            isShieldPowerupActive -= 1;
+           
+        }
+        else if (isShieldPowerupActive == 0)
+        {
+            
+            
             _Lives -= 1;
 
             if (_Lives == 2)
@@ -176,8 +196,10 @@ public class Player : MonoBehaviour
 
     public void ShieldPowerup()
     {
+        _shieldColor.color = new Color(0, 1, 0, 1);
         _shield.SetActive(true);
-        isShieldPowerupActive = true;
+        
+        isShieldPowerupActive = 3;
     }
 
     IEnumerator TripleShotPowerDownRoutine()

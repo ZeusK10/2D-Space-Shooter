@@ -794,6 +794,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
+  _baseSpeed: 5
   _laserPrefab: {fileID: 2200135332110336469, guid: 44460239d0b9f8f4d9e926d316064e9f, type: 3}
   _tripleShotPrefab: {fileID: 5615600096915091384, guid: 89251dd7a1c7dde4585790e6e827b08f, type: 3}
   _spawnManager: {fileID: 238473116}
@@ -801,6 +802,7 @@ MonoBehaviour:
   isSpeedPowerupActive: 0
   isShieldPowerupActive: 0
   _shield: {fileID: 1346322620}
+  _shieldColor: {fileID: 1346322623}
   _Lives: 3
   _fireRate: 0.5
   _playerHurtRight: {fileID: 2077694038}
@@ -1257,6 +1259,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2385816790883037385, guid: aa90bf44bc533bf41a762a1a8773ff0b, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385816790883037385, guid: aa90bf44bc533bf41a762a1a8773ff0b, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385816790883037385, guid: aa90bf44bc533bf41a762a1a8773ff0b, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385816790883037385, guid: aa90bf44bc533bf41a762a1a8773ff0b, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385816790883037385, guid: aa90bf44bc533bf41a762a1a8773ff0b, type: 3}
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
@@ -1278,6 +1296,11 @@ GameObject:
 --- !u!4 &1346322621 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2385816790883037384, guid: aa90bf44bc533bf41a762a1a8773ff0b, type: 3}
+  m_PrefabInstance: {fileID: 1346322619}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &1346322623 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2385816790883037385, guid: aa90bf44bc533bf41a762a1a8773ff0b, type: 3}
   m_PrefabInstance: {fileID: 1346322619}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1514210938
