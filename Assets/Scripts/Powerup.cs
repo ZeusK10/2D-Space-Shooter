@@ -48,6 +48,10 @@ public class Powerup : MonoBehaviour
                         player.ShieldPowerup();
                         break;
 
+                    case 3:
+                        player.AmmoPowerup();
+                        break;
+
                     default:
                         Debug.Log("No ID detected");
                         break;

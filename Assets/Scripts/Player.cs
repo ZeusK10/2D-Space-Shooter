@@ -79,6 +79,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+        _uIManager.UpdatePlayerAmmo(_ammo);
         if (Input.GetKeyDown(KeyCode.Space) && Time.time>_canFire)
         {
             if(_ammo>0)
@@ -139,7 +140,7 @@ public class Player : MonoBehaviour
         }
         _laserAudio.Play();
         _ammo -= 1;
-        _uIManager.UpdatePlayerAmmo(_ammo);
+        
     }
 
     public void Damage()
@@ -206,6 +207,11 @@ public class Player : MonoBehaviour
         _shield.SetActive(true);
         
         isShieldPowerupActive = 3;
+    }
+
+    public void AmmoPowerup()
+    {
+        _ammo = 15;
     }
 
     IEnumerator TripleShotPowerDownRoutine()
