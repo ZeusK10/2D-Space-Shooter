@@ -214,6 +214,26 @@ public class Player : MonoBehaviour
         _ammo = 15;
     }
 
+    public void HealthPowerup()
+    {
+        if(_Lives<3)
+        {
+            _Lives += 1;
+            _uIManager.UpdatePlayerLives(_Lives);
+        }
+
+        if (_Lives == 2)
+        {
+            _playerHurtRight.SetActive(false);
+        }
+        else if (_Lives == 3)
+        {
+            _playerHurtLeft.SetActive(false);
+        }
+        
+
+    }
+
     IEnumerator TripleShotPowerDownRoutine()
     {
         yield return new WaitForSeconds(5f);
