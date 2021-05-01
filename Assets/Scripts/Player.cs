@@ -7,14 +7,13 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed;
 
+
     [SerializeField]
     private int _ammo = 15;
 
     [SerializeField]
     private GameObject _destructiveLaser;
 
-    [SerializeField]
-    private float _baseSpeed = 5f;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -26,13 +25,16 @@ public class Player : MonoBehaviour
     private bool isTripleShotActive = false;
 
     [SerializeField]
-    private bool isSpeedPowerupActive = false;
+    public bool isSpeedPowerupActive = true;
 
     [SerializeField]
     private int isShieldPowerupActive = 0;
 
     [SerializeField]
     private GameObject _shield;
+
+    [SerializeField]
+    private HUD_Bar _hudBar;
 
     [SerializeField]
     private SpriteRenderer _shieldColor;
@@ -76,6 +78,8 @@ public class Player : MonoBehaviour
             Debug.LogError("Audio Source is null");
         }
 
+        _hudBar = GameObject.Find("HUD_Foreground").GetComponent<HUD_Bar>();
+
         _shieldColor = _shield.GetComponent<SpriteRenderer>();
     }
 
@@ -101,24 +105,17 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput,verticalInput, 0);
 
-        if(Input.GetKey(KeyCode.LeftShift))
+        
+       
+        if (isSpeedPowerupActive && Input.GetKey(KeyCode.LeftShift))
         {
-            _speed = 1.5f;
+            transform.Translate(direction * _speed * _speedMultiplier * Time.deltaTime);
+            _hudBar.UpdateHUDBar();
         }
         else
         {
-            _speed = 1;
+            transform.Translate(direction * _speed * Time.deltaTime);
         }
-        if (isSpeedPowerupActive)
-        {
-            transform.Translate(direction *_baseSpeed * _speed * _speedMultiplier * Time.deltaTime);
-        }
-        else
-        {
-            transform.Translate(direction *_baseSpeed * _speed * Time.deltaTime);
-        }
-
-
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.9f, 0), 0);
         if (transform.position.x > 11.25f)
@@ -200,9 +197,12 @@ public class Player : MonoBehaviour
     public void SpeedPowerup()
     {
         isSpeedPowerupActive = true;
-        
-        StartCoroutine(SpeedPowerDownRoutine());
-
+        _hudBar.AddHUDBar();
+        _hudBar.UpdateHUDBar();
+    }
+    public void SpeedPowerDown()
+    {
+        isSpeedPowerupActive = false;
     }
 
     public void ShieldPowerup()
@@ -257,11 +257,7 @@ public class Player : MonoBehaviour
         isTripleShotActive = false;
     }
 
-    IEnumerator SpeedPowerDownRoutine()
-    {
-        yield return new WaitForSeconds(5f);
-        isSpeedPowerupActive = false;
-    }
+    
 
     public void UpdateScore(int points)
     {
