@@ -14,11 +14,20 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] powerups;
 
     private bool _stopSpawning = false;
+    private CameraShake _cameraShake;
 
-    
+    private void Start()
+    {
+        _cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+        if (_cameraShake == null)
+        {
+            Debug.LogError("_camera shake is null");
+        }
+    }
 
     public void StartSpawning()
     {
+        
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
         StartCoroutine(SpawnAmmoRoutine());
@@ -84,6 +93,7 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
+        _cameraShake.GameOver();
     }
 
 }

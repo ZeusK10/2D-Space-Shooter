@@ -36,6 +36,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private HUD_Bar _hudBar;
 
+    private CameraShake _cameraShake;
+
     [SerializeField]
     private SpriteRenderer _shieldColor;
 
@@ -64,6 +66,12 @@ public class Player : MonoBehaviour
         if(_spawnManager==null)
         {
             Debug.LogError("_Spawn Manager is null");
+        }
+
+        _cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
+        if (_cameraShake == null)
+        {
+            Debug.LogError("_camera shake is null");
         }
 
         _uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -167,7 +175,7 @@ public class Player : MonoBehaviour
         else if (isShieldPowerupActive == 0)
         {
             _Lives -= 1;
-
+            _cameraShake.Shake();
             if (_Lives == 2)
             {
                 _playerHurtLeft.SetActive(true);

@@ -23,7 +23,7 @@ public class HUD_Bar : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftShift) && _currentSpeedTime > 0.0f)
         {
-            _currentSpeedTime -= 0.2f;
+            _currentSpeedTime -= 0.5f;
             
         }
         else if (_currentSpeedTime <= 0f)
