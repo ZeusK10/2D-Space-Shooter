@@ -8,6 +8,9 @@ public class Player : MonoBehaviour
     private float _speed;
 
     [SerializeField]
+    private int _ammo = 15;
+
+    [SerializeField]
     private float _baseSpeed = 5f;
     [SerializeField]
     private GameObject _laserPrefab;
@@ -78,7 +81,11 @@ public class Player : MonoBehaviour
         PlayerMovement();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time>_canFire)
         {
-            FireLaser();
+            if(_ammo>0)
+            {
+                FireLaser();
+            }
+            
         }
         
     }
@@ -131,13 +138,14 @@ public class Player : MonoBehaviour
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.1f, 0), Quaternion.identity);
         }
         _laserAudio.Play();
+        _ammo -= 1;
+        _uIManager.UpdatePlayerAmmo(_ammo);
     }
 
     public void Damage()
     {
         if(isShieldPowerupActive == 3)
         {
-            //_shieldColor.color = new Color(0, 1, 0, 1);
             _shieldColor.color = new Color(0, 0, 1, 1);
             isShieldPowerupActive -= 1;
              
@@ -156,8 +164,6 @@ public class Player : MonoBehaviour
         }
         else if (isShieldPowerupActive == 0)
         {
-            
-            
             _Lives -= 1;
 
             if (_Lives == 2)
