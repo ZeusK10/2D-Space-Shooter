@@ -32,6 +32,11 @@ public class UIManager : MonoBehaviour
         {
             SceneManager.LoadScene(1);
         }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     public void UpdatePlayerScore(int playerScore)

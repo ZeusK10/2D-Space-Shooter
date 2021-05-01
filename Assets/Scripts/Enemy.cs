@@ -11,6 +11,12 @@ public class Enemy : MonoBehaviour
 
     private Animator _animation;
 
+    private float _canFire = -1;
+    private float _fireRate;
+
+    [SerializeField]
+    private GameObject _enemyLaserPrefab;
+
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
@@ -34,11 +40,25 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        CalculateMovement();
+
+        if(Time.time>_canFire)
+        {
+            _fireRate = Random.Range(3f, 7f);
+            _canFire = Time.time + _fireRate;
+            Instantiate(_enemyLaserPrefab, transform.position + new Vector3(0, -0.6f, 0), Quaternion.identity);
+           
+        }
+        
+    }
+
+    private void CalculateMovement()
+    {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
 
-        if(transform.position.y<-6)
+        if (transform.position.y < -6)
         {
-            transform.position= new Vector3(Random.Range(-9.0f, 9.1f), 9, 0);
+            transform.position = new Vector3(Random.Range(-9.0f, 9.1f), 9, 0);
         }
     }
 
@@ -55,18 +75,20 @@ public class Enemy : MonoBehaviour
             _animation.SetTrigger("IsEnemyDead");
             _explosionAudio.Play();
             _speed = 0f;
-            //provide score value 5 when player and enemy collide
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject,2.8f);
         }
         else if (other.tag == "Laser")
         {
             player.UpdateScore(10);
-            //provide score value 10 when laser hits enemy
             Destroy(other.gameObject);
             _speed = 0f;
             _animation.SetTrigger("IsEnemyDead");
             _explosionAudio.Play();
+            Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject,2.8f);
         }
     }
+
+   
 }
