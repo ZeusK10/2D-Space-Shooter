@@ -5,7 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField]
-    private float _speed = 5f;
+    private float _speed;
+
+    [SerializeField]
+    private float _baseSpeed = 5f;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -30,7 +33,7 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _Lives = 3;
 
-    private int _speedMultiplier = 2;
+    private int _speedMultiplier = 3;
 
     [SerializeField]
     private float _fireRate = 0.5f;
@@ -81,15 +84,23 @@ public class Player : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalInput,verticalInput, 0);
 
-        if(isSpeedPowerupActive)
+        if(Input.GetKey(KeyCode.LeftShift))
         {
-            transform.Translate(direction * _speed * _speedMultiplier * Time.deltaTime);
+            _speed = 1.5f;
         }
         else
         {
-            transform.Translate(direction * _speed * Time.deltaTime);
+            _speed = 1;
         }
-        
+        if (isSpeedPowerupActive)
+        {
+            transform.Translate(direction *_baseSpeed * _speed * _speedMultiplier * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(direction *_baseSpeed * _speed * Time.deltaTime);
+        }
+
 
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.9f, 0), 0);
