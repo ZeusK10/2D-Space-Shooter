@@ -10,8 +10,6 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject _enemyContainer;
 
-    
-
     [SerializeField]
     private GameObject[] powerups;
 
@@ -25,6 +23,17 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnPowerupRoutine());
         StartCoroutine(SpawnAmmoRoutine());
         StartCoroutine(SpawnHealthRoutine());
+        StartCoroutine(SpawnDestructiveLaserRoutine());
+    }
+
+    IEnumerator SpawnDestructiveLaserRoutine()
+    {
+        while (_stopSpawning == false)
+        {
+            yield return new WaitForSeconds(Random.Range(45.0f, 65.0f));
+            Instantiate(powerups[5], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            
+        }
     }
 
     IEnumerator SpawnEnemyRoutine()

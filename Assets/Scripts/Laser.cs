@@ -21,4 +21,12 @@ public class Laser : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag=="Destructive_Laser")
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

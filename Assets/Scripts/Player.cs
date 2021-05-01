@@ -11,6 +11,9 @@ public class Player : MonoBehaviour
     private int _ammo = 15;
 
     [SerializeField]
+    private GameObject _destructiveLaser;
+
+    [SerializeField]
     private float _baseSpeed = 5f;
     [SerializeField]
     private GameObject _laserPrefab;
@@ -35,6 +38,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer _shieldColor;
 
     private AudioSource _laserAudio;
+    private bool _isDestructiveLaserActive = false;
 
     [SerializeField]
     private int _Lives = 3;
@@ -82,7 +86,7 @@ public class Player : MonoBehaviour
         _uIManager.UpdatePlayerAmmo(_ammo);
         if (Input.GetKeyDown(KeyCode.Space) && Time.time>_canFire)
         {
-            if(_ammo>0)
+            if(_ammo>0 && _isDestructiveLaserActive==false)
             {
                 FireLaser();
             }
@@ -229,9 +233,22 @@ public class Player : MonoBehaviour
         else if (_Lives == 3)
         {
             _playerHurtLeft.SetActive(false);
-        }
-        
+        } 
 
+    }
+
+    public void DestructivePowerup()
+    {
+        _destructiveLaser.SetActive(true);
+        _isDestructiveLaserActive = true;
+        StartCoroutine(DestructiveLaserStopRoutine());
+    }
+
+    IEnumerator DestructiveLaserStopRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+        _isDestructiveLaserActive = false;
+        _destructiveLaser.SetActive(false);
     }
 
     IEnumerator TripleShotPowerDownRoutine()
