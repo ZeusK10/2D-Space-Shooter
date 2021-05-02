@@ -41,22 +41,18 @@ public class Powerup : MonoBehaviour
                         break;
 
                     case 1:
-                        player.SpeedPowerup();
-                        break;
-
-                    case 2:
                         player.ShieldPowerup();
                         break;
 
-                    case 3:
+                    case 2:
                         player.AmmoPowerup();
                         break;
 
-                    case 4:
+                    case 3:
                         player.HealthPowerup();
                         break;
 
-                    case 5:
+                    case 4:
                         player.DestructivePowerup();
                         break;
 

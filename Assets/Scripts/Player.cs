@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed;
 
+    [SerializeField]
+    private GameObject _thruster;
 
     [SerializeField]
     private int _ammo = 15;
@@ -95,6 +97,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+        
         _uIManager.UpdatePlayerAmmo(_ammo);
         if (Input.GetKeyDown(KeyCode.Space) && Time.time>_canFire)
         {
@@ -118,11 +121,13 @@ public class Player : MonoBehaviour
         if (isSpeedPowerupActive && Input.GetKey(KeyCode.LeftShift))
         {
             transform.Translate(direction * _speed * _speedMultiplier * Time.deltaTime);
-            _hudBar.UpdateHUDBar();
+            _thruster.SetActive(true);
         }
         else
         {
+           
             transform.Translate(direction * _speed * Time.deltaTime);
+            _thruster.SetActive(false);
         }
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.9f, 0), 0);
@@ -205,8 +210,6 @@ public class Player : MonoBehaviour
     public void SpeedPowerup()
     {
         isSpeedPowerupActive = true;
-        _hudBar.AddHUDBar();
-        _hudBar.UpdateHUDBar();
     }
     public void SpeedPowerDown()
     {

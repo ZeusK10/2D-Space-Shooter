@@ -514,7 +514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &195278721
 Transform:
   m_ObjectHideFlags: 0
@@ -632,7 +632,6 @@ MonoBehaviour:
   _enemyContainer: {fileID: 1063624989}
   powerups:
   - {fileID: 2309530267986181084, guid: ccb71dfda4e66bb41ba70f4590ac9207, type: 3}
-  - {fileID: 7981286327293539797, guid: 935742d75e22c714f9d0fa2d5e85fdf6, type: 3}
   - {fileID: 3352626368572359670, guid: da7355c7667f61342ac974a6918ea805, type: 3}
   - {fileID: 271268073440522759, guid: 074908a2f02bd694d95b08b7cccff1b2, type: 3}
   - {fileID: 3901623063958615146, guid: dd6a3b350fa6f3b439c263a2382eebfa, type: 3}
@@ -889,6 +888,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 8
+  _thruster: {fileID: 195278720}
   _ammo: 15
   _destructiveLaser: {fileID: 505309288}
   _laserPrefab: {fileID: 2200135332110336469, guid: 44460239d0b9f8f4d9e926d316064e9f, type: 3}
