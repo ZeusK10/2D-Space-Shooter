@@ -23,12 +23,15 @@ public class UIManager : MonoBehaviour
     private GameObject _restartMessage;
     [SerializeField]
     private bool _isGameOver;
+    [SerializeField]
+    private Text _waveText;
    
     // Start is called before the first frame update
     void Start()
     {
         _scoreText.text = "Score: 0";
         _ammoText.text = "15/15";
+        _waveText.text = "";
     }
 
     private void Update()
@@ -64,6 +67,17 @@ public class UIManager : MonoBehaviour
         _spriteImage.sprite = _livesSprite[playerLife];
     }
 
+    public void UpdateWave(int waveNumber)
+    {
+        _waveText.text = "Wave " + waveNumber;
+        StartCoroutine(WaveRoutine());
+    }
+
+    IEnumerator WaveRoutine()
+    {
+        yield return new WaitForSeconds(2);
+        _waveText.text = "";
+    }
     void GameOverSequence()
     {
         _isGameOver = true;

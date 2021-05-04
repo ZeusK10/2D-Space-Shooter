@@ -13,6 +13,15 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] powerups;
 
+    [SerializeField]
+    private UIManager _waveText;
+    private int _waveNumber = 1;
+    
+    [SerializeField]
+    private float _waveTime;
+    [SerializeField]
+    private float _spawnWaitTime=5f;
+
     private bool _stopSpawning = false;
 
 
@@ -67,10 +76,18 @@ public class SpawnManager : MonoBehaviour
                 newEnemy.transform.parent = _enemyContainer.transform;
             }
 
-
-            yield return new WaitForSeconds(5.0f);
+            _waveTime++;
+            if(_waveTime/5==_waveNumber*5)
+            {
+                _spawnWaitTime -= 0.5f;
+                _waveText.UpdateWave(_waveNumber);
+                _waveNumber++;
+                
+            }
+            yield return new WaitForSeconds(_spawnWaitTime);
         }
     }
+    //I made changes
 
     IEnumerator SpawnAmmoRoutine()
     {
@@ -98,7 +115,7 @@ public class SpawnManager : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(5.0f, 9.0f));
             int powerupID = Random.Range(0, 2);
-                Instantiate(powerups[powerupID], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            Instantiate(powerups[powerupID], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
         }
     }
 
