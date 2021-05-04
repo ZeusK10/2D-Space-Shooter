@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         _scoreText.text = "Score: 0";
-        _ammoText.text = "Ammo: 15";
+        _ammoText.text = "15/15";
     }
 
     private void Update()
@@ -51,7 +51,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdatePlayerAmmo(int ammo)
     {
-        _ammoText.text = "Ammo: " + ammo;
+        _ammoText.text = ammo+"/15";
     }
 
     public void UpdatePlayerLives(int playerLife)
