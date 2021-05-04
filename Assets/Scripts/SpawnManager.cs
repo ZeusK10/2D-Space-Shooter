@@ -14,17 +14,12 @@ public class SpawnManager : MonoBehaviour
     private GameObject[] powerups;
 
     private bool _stopSpawning = false;
-    private CameraShake _cameraShake;
+
 
     private void Start()
     {
-        _cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
-        if (_cameraShake == null)
-        {
-            Debug.LogError("_camera shake is null");
-        }
+        
     }
-
     public void StartSpawning()
     {
         
@@ -50,11 +45,28 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
         while(_stopSpawning==false)
         {
-            int randomNumber = Random.Range(-9, 10);
+            int rand = Random.Range(0, 3);
+            if (rand==0)
+            {
+                GameObject newEnemy = Instantiate(_enemyPrefab, new Vector3(Random.Range(-9, 10), 9, 0), Quaternion.identity);
 
-            GameObject newEnemy = Instantiate(_enemyPrefab, new Vector3(randomNumber, 9, 0), Quaternion.identity);
+                newEnemy.transform.parent = _enemyContainer.transform;
+                
 
-            newEnemy.transform.parent = _enemyContainer.transform;  
+            }
+            else if(rand==1)
+            {
+                GameObject newEnemy = Instantiate(_enemyPrefab, new Vector3(12, Random.Range(0f, 5f), 0), Quaternion.identity);
+
+                newEnemy.transform.parent = _enemyContainer.transform;
+            }
+            else if(rand==2)
+            {
+                GameObject newEnemy = Instantiate(_enemyPrefab, new Vector3(-12, Random.Range(0f, 5f), 0), Quaternion.identity);
+
+                newEnemy.transform.parent = _enemyContainer.transform;
+            }
+
 
             yield return new WaitForSeconds(5.0f);
         }
@@ -93,7 +105,7 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
-        _cameraShake.GameOver();
+        
     }
 
 }

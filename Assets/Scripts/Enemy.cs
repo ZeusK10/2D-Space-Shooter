@@ -16,6 +16,12 @@ public class Enemy : MonoBehaviour
     private float _fireRate;
 
     [SerializeField]
+    private bool _isSpawningTop=false;
+    [SerializeField]
+    private bool _isSpawningRight=false;
+    
+
+    [SerializeField]
     private GameObject _enemyLaserPrefab;
 
     private void Start()
@@ -37,18 +43,30 @@ public class Enemy : MonoBehaviour
         {
             Debug.Log("Animator is null");
         }
+
+        if (transform.position.x >11.5f)
+        {
+            _isSpawningRight = true;
+        }
+
+        if(transform.position.y>8.5f)
+        {
+            _isSpawningTop = true;
+        }
     }
 
     void Update()
     {
-        CalculateMovement();
+        CalculateMovementDown();
 
         if(_isEnemyDead==false)
         {
             FireLaser();
         }
         
+        
     }
+
 
     private void FireLaser()
     {
@@ -60,15 +78,37 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void CalculateMovement()
+    private void CalculateMovementDown()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if(_isSpawningTop==true && _isSpawningRight==false)
+        {
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
+        else if(_isSpawningRight==true && _isSpawningTop==false)
+        {
+            transform.Translate(Vector3.left * _speed * Time.deltaTime);
+        }
+        else if(_isSpawningTop==false && _isSpawningRight==false)
+        {
+             transform.Translate(Vector3.right * _speed * Time.deltaTime);
+        }
+        
+        
 
-        if (transform.position.y < -6)
+        if (transform.position.y < -6 && _isSpawningTop==true)
         {
             transform.position = new Vector3(Random.Range(-9.0f, 9.1f), 9, 0);
         }
+        else if(transform.position.x < -12 && _isSpawningRight==true)
+        {
+            transform.position = new Vector3(12, Random.Range(0f, 5.5f), 0);
+        }
+        else if(transform.position.x > 12 && _isSpawningRight == false)
+        {
+            transform.position = new Vector3(-12, Random.Range(0f, 5.5f), 0);
+        }
     }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {

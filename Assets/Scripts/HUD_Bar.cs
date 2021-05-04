@@ -12,6 +12,10 @@ public class HUD_Bar : MonoBehaviour
     private void Start()
     {
         player = GameObject.Find("Player").GetComponent<Player>();
+        if (player == null)
+        {
+            Debug.Log("Player is null");
+        }
     }
 
     private void Update()
