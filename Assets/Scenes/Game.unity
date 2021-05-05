@@ -636,6 +636,7 @@ MonoBehaviour:
   - {fileID: 271268073440522759, guid: 074908a2f02bd694d95b08b7cccff1b2, type: 3}
   - {fileID: 3901623063958615146, guid: dd6a3b350fa6f3b439c263a2382eebfa, type: 3}
   - {fileID: 1744490759355800283, guid: 984976198ef04be4c9b79b1e6042d5fa, type: 3}
+  - {fileID: 3787008753342150739, guid: 3588d84026ee40f4dab43dc57c76ba7a, type: 3}
   _waveText: {fileID: 552486026}
   _waveTime: 0
   _spawnWaitTime: 5

@@ -56,6 +56,10 @@ public class Powerup : MonoBehaviour
                         player.DestructivePowerup();
                         break;
 
+                    case 5:
+                        player.NegativePowerup();
+                        break;
+
                     default:
                         Debug.Log("No ID detected");
                         break;

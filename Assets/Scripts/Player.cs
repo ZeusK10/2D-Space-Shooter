@@ -277,6 +277,32 @@ public class Player : MonoBehaviour
         _uIManager.UpdatePlayerScore(_score);
     }
 
+
+    public void NegativePowerup()
+    {
+        int rand = Random.Range(0, 2);
+        if (rand==0)
+        {
+            if(isShieldPowerupActive > 0)
+            {
+                isShieldPowerupActive = 0;
+                _shield.SetActive(false);
+                return;
+            }
+            Damage();
+        }
+        else
+        {
+            _speed /= 2;
+            StartCoroutine(SpeedDecreaseRoutine());
+        }
+    }
+
+    IEnumerator SpeedDecreaseRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+        _speed *= 2;
+    }
 }
 
 
