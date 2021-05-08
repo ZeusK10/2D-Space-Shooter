@@ -14,6 +14,11 @@ public class Enemy : MonoBehaviour
 
     private float _canFire = -1;
     private float _fireRate;
+    private int _life;
+
+    [SerializeField]
+    private bool _isNewEnemy;
+    private int rand;
 
     [SerializeField]
     private bool _isSpawningTop=false;
@@ -29,7 +34,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player").GetComponent<Player>();
         if(player==null)
         {
-            Debug.Log("Player is null");
+            Debug.LogError("Player is null");
         }
 
         _explosionAudio = GameObject.Find("Explosion_Music").GetComponent<AudioSource>();
@@ -53,19 +58,66 @@ public class Enemy : MonoBehaviour
         {
             _isSpawningTop = true;
         }
+
+        rand = Random.Range(0, 2);
     }
 
     void Update()
     {
-        CalculateMovementDown();
+        if(_isNewEnemy==false)
+        {
+            CalculateMovementDown();
+        }
+        else
+        {
+            UniqueMovement();
+        }
 
-        if(_isEnemyDead==false)
+        if(player!=null)
+        {
+            _life = player.GetLives();
+        }
+        
+
+        if(_isEnemyDead==false && _life>0)
         {
             FireLaser();
         }
-        
     }
 
+
+    private void UniqueMovement()
+    {
+        if(rand==0)
+        {
+            transform.Translate(new Vector3(-1, -1, 0) * _speed * Time.deltaTime);
+
+            if(transform.position.x<-10)
+            {
+                rand = 1;
+            }
+        }
+        else
+        {
+            transform.Translate(new Vector3(1, -1, 0) * _speed * Time.deltaTime);
+
+            if(transform.position.x>10)
+            {
+                rand = 0;
+            }
+        }
+
+        if (transform.position.y < -6)
+        {
+            transform.position = new Vector3(Random.Range(-9.0f, 9.1f), 9, 0);
+        }
+
+    }
+
+    public void EnableUniqueMovement()
+    {
+        _isNewEnemy = true;
+    }
 
     private void FireLaser()
     {
@@ -119,12 +171,21 @@ public class Enemy : MonoBehaviour
                 player.Damage();
             }
             player.UpdateScore(5);
-            _animation.SetTrigger("IsEnemyDead");
+            
+            
             _explosionAudio.Play();
             _speed = 0f;
             _isEnemyDead = true;
             Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject,2.8f);
+            if (_isNewEnemy == false)
+            {
+                _animation.SetTrigger("IsEnemyDead");
+                Destroy(this.gameObject, 2.8f);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
         else if (other.tag == "Laser")
         {
@@ -132,22 +193,40 @@ public class Enemy : MonoBehaviour
             Destroy(other.gameObject);
             _speed = 0f;
             _isEnemyDead = true;
-            _animation.SetTrigger("IsEnemyDead");
+            
             _explosionAudio.Play();
             Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject,2.8f);
+            if (_isNewEnemy == false)
+            {
+                _animation.SetTrigger("IsEnemyDead");
+                Destroy(this.gameObject, 2.8f);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
+
         }
         else if (other.tag == "Destructive_Laser")
         {
             player.UpdateScore(10);
             _speed = 0f;
             _isEnemyDead = true;
-            _animation.SetTrigger("IsEnemyDead");
+            
             _explosionAudio.Play();
             Destroy(GetComponent<Collider2D>());
-            Destroy(this.gameObject, 2.8f);
+            if (_isNewEnemy == false)
+            {
+                _animation.SetTrigger("IsEnemyDead");
+                Destroy(this.gameObject, 2.8f);
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 
-   
+
+
 }

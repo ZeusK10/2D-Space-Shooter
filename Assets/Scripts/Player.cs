@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _ammo = 15;
 
+    private Animator _animation;
+
     [SerializeField]
     private GameObject _destructiveLaser;
 
@@ -35,8 +37,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private GameObject _shield;
 
-    [SerializeField]
-    private HUD_Bar _hudBar;
 
     private CameraShake _cameraShake;
 
@@ -88,9 +88,15 @@ public class Player : MonoBehaviour
             Debug.LogError("Audio Source is null");
         }
 
-        _hudBar = GameObject.Find("HUD_Foreground").GetComponent<HUD_Bar>();
+       
 
         _shieldColor = _shield.GetComponent<SpriteRenderer>();
+
+        _animation = gameObject.GetComponent<Animator>();
+        if (_animation == null)
+        {
+            Debug.Log("Animator is null");
+        }
     }
 
     // Update is called once per frame
@@ -122,12 +128,31 @@ public class Player : MonoBehaviour
         {
             transform.Translate(direction * _speed * _speedMultiplier * Time.deltaTime);
             _thruster.SetActive(true);
+            
+            
         }
         else
         {
            
             transform.Translate(direction * _speed * Time.deltaTime);
             _thruster.SetActive(false);
+        }
+
+        if (direction.x < 0)
+        {
+            _animation.SetTrigger("isTurnLeft");
+            _animation.ResetTrigger("isTurnRight");
+
+        }
+        else if (direction.x > 0)
+        {
+            _animation.SetTrigger("isTurnRight");
+            _animation.ResetTrigger("isTurnLeft");
+        }
+        else
+        {
+            _animation.ResetTrigger("isTurnLeft");
+            _animation.ResetTrigger("isTurnRight");
         }
 
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -3.9f, 0), 0);
@@ -191,11 +216,16 @@ public class Player : MonoBehaviour
             }
 
             _uIManager.UpdatePlayerLives(_Lives);
-            if (_Lives < 1)
+            if (_Lives == 0)
             {
                 _spawnManager.OnPlayerDeath();
                 _cameraShake.GameOver();
-                Destroy(this.gameObject);
+                Destroy(this.gameObject,1);
+            }
+            else if(_Lives<0)
+            {
+                _spawnManager.OnPlayerDeath();
+                Debug.Log("Player is dead");
             }
         }
         
@@ -247,6 +277,11 @@ public class Player : MonoBehaviour
             _playerHurtLeft.SetActive(false);
         } 
 
+    }
+
+    public int GetLives()
+    {
+        return _Lives;
     }
 
     public void DestructivePowerup()

@@ -8,7 +8,15 @@ public class SpawnManager : MonoBehaviour
     private GameObject _enemyPrefab;
 
     [SerializeField]
+    private GameObject _uniqueEnemyPrefab;
+
+    [SerializeField]
     private GameObject _enemyContainer;
+
+    [SerializeField]
+    private GameObject _moveTowardsEnemyPrefab;
+
+    private float _moveTowardsEnemyWaitTime;
 
     [SerializeField]
     private GameObject[] powerups;
@@ -24,10 +32,12 @@ public class SpawnManager : MonoBehaviour
 
     private bool _stopSpawning = false;
 
+    private Enemy _enemy;
+
 
     private void Start()
     {
-        
+        _moveTowardsEnemyWaitTime = Random.Range(5f, 10f);
     }
     public void StartSpawning()
     {
@@ -37,6 +47,20 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnAmmoRoutine());
         StartCoroutine(SpawnHealthRoutine());
         StartCoroutine(SpawnDestructiveLaserRoutine());
+        StartCoroutine(SpawnMoveTowardsEnemyRoutine());
+        StartCoroutine(SpawnUniqueEnemyRoutine());
+    }
+
+    IEnumerator SpawnUniqueEnemyRoutine()
+    {
+        while(_stopSpawning == false)
+        {
+            yield return new WaitForSeconds(10);
+            GameObject newEnemy = Instantiate(_uniqueEnemyPrefab, new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            _enemy = newEnemy.GetComponent<Enemy>();
+            _enemy.EnableUniqueMovement();
+        }
+        
     }
 
     IEnumerator SpawnDestructiveLaserRoutine()
@@ -46,6 +70,16 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(45.0f, 65.0f));
             Instantiate(powerups[4], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
             
+        }
+    }
+
+    IEnumerator SpawnMoveTowardsEnemyRoutine()
+    {
+        yield return new WaitForSeconds(_moveTowardsEnemyWaitTime);
+        while (_stopSpawning == false)
+        {
+            Instantiate(_moveTowardsEnemyPrefab, new Vector3(Random.Range(-9, 10), 9, 0), Quaternion.identity);
+            yield return new WaitForSeconds(_moveTowardsEnemyWaitTime);
         }
     }
 
@@ -87,7 +121,6 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(_spawnWaitTime);
         }
     }
-    //I made changes
 
     IEnumerator SpawnAmmoRoutine()
     {
