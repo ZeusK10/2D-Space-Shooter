@@ -43,15 +43,20 @@ public class EnemyMoveTowards : MonoBehaviour
 
     void Update()
     {
-        PlayerDied();
+        
         if (_isenemydead==false)
         {
+            if(player==null)
+            {
+                _isPlayerAlive = false;
+            }
             if(player!=null)
             {
                 EnemyMovement();
             }
             
-            if(rotating==false)
+
+            if (rotating==false)
             {
                 FireLaser();
             }
@@ -144,14 +149,7 @@ public class EnemyMoveTowards : MonoBehaviour
         }
     }
 
-    public void PlayerDied()
-    {
-        int life = _player.GetLives();
-        if(life<1)
-        {
-            _isPlayerAlive = false;
-        }
-    }
+  
 
 
 }

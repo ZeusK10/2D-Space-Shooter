@@ -908,7 +908,6 @@ MonoBehaviour:
   isSpeedPowerupActive: 1
   isShieldPowerupActive: 0
   _shield: {fileID: 1346322620}
-  _hudBar: {fileID: 1394981687}
   _shieldColor: {fileID: 1346322623}
   _Lives: 3
   _fireRate: 0.5

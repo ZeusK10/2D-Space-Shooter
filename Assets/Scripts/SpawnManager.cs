@@ -53,23 +53,26 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnUniqueEnemyRoutine()
     {
-        while(_stopSpawning == false)
+        yield return new WaitForSeconds(10);
+        while (_stopSpawning == false)
         {
-            yield return new WaitForSeconds(10);
+            
             GameObject newEnemy = Instantiate(_uniqueEnemyPrefab, new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
             _enemy = newEnemy.GetComponent<Enemy>();
             _enemy.EnableUniqueMovement();
+            yield return new WaitForSeconds(10);
         }
         
     }
 
     IEnumerator SpawnDestructiveLaserRoutine()
     {
+        yield return new WaitForSeconds(Random.Range(45.0f, 65.0f));
         while (_stopSpawning == false)
         {
-            yield return new WaitForSeconds(Random.Range(45.0f, 65.0f));
-            Instantiate(powerups[4], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
             
+            Instantiate(powerups[4], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(45.0f, 65.0f));
         }
     }
 
@@ -124,18 +127,21 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator SpawnAmmoRoutine()
     {
-        while(_stopSpawning==false)
+        yield return new WaitForSeconds(Random.Range(15.0f, 25.0f));
+        while (_stopSpawning==false)
         {
-            yield return new WaitForSeconds(Random.Range(15.0f, 25.0f));
+            
             Instantiate(powerups[2], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(15.0f, 25.0f));
         }
     }
 
     IEnumerator SpawnHealthRoutine()
     {
-        while(_stopSpawning==false)
+        yield return new WaitForSeconds(Random.Range(30.0f, 45.0f));
+        while (_stopSpawning==false)
         {
-            yield return new WaitForSeconds(Random.Range(30.0f, 45.0f));
+            
             if(Random.Range(0,2)==0)
             {
                 Instantiate(powerups[3], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
@@ -144,18 +150,18 @@ public class SpawnManager : MonoBehaviour
             {
                 Instantiate(powerups[5], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
             }
-            
+            yield return new WaitForSeconds(Random.Range(30.0f, 45.0f));
         }
     }
 
     IEnumerator SpawnPowerupRoutine()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(9f);
         while (_stopSpawning == false)
-        {
-            yield return new WaitForSeconds(Random.Range(5.0f, 9.0f));
+        { 
             int powerupID = Random.Range(0, 2);
             Instantiate(powerups[powerupID], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(5.0f, 9.0f));
         }
     }
 

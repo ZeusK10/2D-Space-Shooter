@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
 
     private Animator _animation;
 
+    private GameObject _enemyShield;
+    private bool _isShieldActive;
+
     private float _canFire = -1;
     private float _fireRate;
     private int _life;
@@ -31,6 +34,23 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        if(_isNewEnemy==true)
+        {
+            _enemyShield = gameObject.transform.Find("Enemy_Shield").gameObject;
+            if (_enemyShield == null)
+            {
+                Debug.LogError("Enemy shield is null");
+            }
+
+
+            int rand = Random.Range(0, 10);
+            if (rand == 5)
+            {
+                _enemyShield.SetActive(true);
+                _isShieldActive = true;
+            }
+        }
+
         player = GameObject.Find("Player").GetComponent<Player>();
         if(player==null)
         {
@@ -165,64 +185,95 @@ public class Enemy : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Player player = other.GetComponent<Player>();
-            if (player != null)
+            if(_isShieldActive==true && _isNewEnemy==true)
             {
-                player.Damage();
-            }
-            player.UpdateScore(5);
-            
-            
-            _explosionAudio.Play();
-            _speed = 0f;
-            _isEnemyDead = true;
-            Destroy(GetComponent<Collider2D>());
-            if (_isNewEnemy == false)
-            {
-                _animation.SetTrigger("IsEnemyDead");
-                Destroy(this.gameObject, 2.8f);
+                _isShieldActive = false;
+                _enemyShield.SetActive(false);
+                Player player = other.GetComponent<Player>();
+                if (player != null)
+                {
+                    player.Damage();
+                }
             }
             else
             {
-                Destroy(this.gameObject);
-            }
+                Player player = other.GetComponent<Player>();
+                if (player != null)
+                {
+                    player.Damage();
+                }
+                player.UpdateScore(5);
+
+
+                _explosionAudio.Play();
+                _speed = 0f;
+                _isEnemyDead = true;
+                Destroy(GetComponent<Collider2D>());
+                if (_isNewEnemy == false)
+                {
+                    _animation.SetTrigger("IsEnemyDead");
+                    Destroy(this.gameObject, 2.8f);
+                }
+                else
+                {
+                    Destroy(this.gameObject);
+                }
+            }  
         }
         else if (other.tag == "Laser")
         {
-            player.UpdateScore(10);
-            Destroy(other.gameObject);
-            _speed = 0f;
-            _isEnemyDead = true;
-            
-            _explosionAudio.Play();
-            Destroy(GetComponent<Collider2D>());
-            if (_isNewEnemy == false)
+            if (_isShieldActive == true && _isNewEnemy == true)
             {
-                _animation.SetTrigger("IsEnemyDead");
-                Destroy(this.gameObject, 2.8f);
+                _isShieldActive = false;
+                Destroy(other.gameObject);
+                _enemyShield.SetActive(false);
             }
             else
             {
-                Destroy(this.gameObject);
+                player.UpdateScore(10);
+                Destroy(other.gameObject);
+                _speed = 0f;
+                _isEnemyDead = true;
+
+                _explosionAudio.Play();
+                Destroy(GetComponent<Collider2D>());
+                if (_isNewEnemy == false)
+                {
+                    _animation.SetTrigger("IsEnemyDead");
+                    Destroy(this.gameObject, 2.8f);
+                }
+                else
+                {
+                    Destroy(this.gameObject);
+                }
             }
 
         }
         else if (other.tag == "Destructive_Laser")
         {
-            player.UpdateScore(10);
-            _speed = 0f;
-            _isEnemyDead = true;
-            
-            _explosionAudio.Play();
-            Destroy(GetComponent<Collider2D>());
-            if (_isNewEnemy == false)
+            if (_isShieldActive == true && _isNewEnemy == true)
             {
-                _animation.SetTrigger("IsEnemyDead");
-                Destroy(this.gameObject, 2.8f);
+                _isShieldActive = false;
+
+                _enemyShield.SetActive(false);
             }
             else
             {
-                Destroy(this.gameObject);
+                player.UpdateScore(10);
+                _speed = 0f;
+                _isEnemyDead = true;
+
+                _explosionAudio.Play();
+                Destroy(GetComponent<Collider2D>());
+                if (_isNewEnemy == false)
+                {
+                    _animation.SetTrigger("IsEnemyDead");
+                    Destroy(this.gameObject, 2.8f);
+                }
+                else
+                {
+                    Destroy(this.gameObject);
+                }
             }
         }
     }

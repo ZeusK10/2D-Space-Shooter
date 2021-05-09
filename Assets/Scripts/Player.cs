@@ -220,7 +220,7 @@ public class Player : MonoBehaviour
             {
                 _spawnManager.OnPlayerDeath();
                 _cameraShake.GameOver();
-                Destroy(this.gameObject,1);
+                Destroy(this.gameObject);
             }
             else if(_Lives<0)
             {
