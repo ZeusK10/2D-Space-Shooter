@@ -6,11 +6,17 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField]
     private int powerupID;
-
+    private Transform player;
     private AudioSource _powerupMusic;
 
     private void Start()
     {
+        player = GameObject.Find("Player").GetComponent<Transform>();
+        if (player == null)
+        {
+            Debug.Log("Player Transform is null");
+        }
+
         _powerupMusic = GameObject.Find("Powerup_Music").GetComponent<AudioSource>();
         if (_powerupMusic == null)
         {
@@ -20,8 +26,26 @@ public class Powerup : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.down * 3f * Time.deltaTime);
-        if(transform.position.y<-7f)
+
+        if(Input.GetKey(KeyCode.C) && Vector3.Distance(transform.position, player.position) < 6f)
+        {
+            
+                transform.position = Vector3.MoveTowards(transform.position, player.position, 5f * Time.deltaTime);
+                
+                if (Vector3.Distance(transform.position, player.position) < 0.001f)
+                {
+                    player.position *= -1.0f;
+
+                }
+        }
+        else
+        {
+            transform.Translate(Vector3.down * 3 * Time.deltaTime);
+
+        }
+
+
+        if (transform.position.y<-7f)
         {
             Destroy(gameObject);
         }
