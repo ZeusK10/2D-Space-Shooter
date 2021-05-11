@@ -11,6 +11,9 @@ public class SpawnManager : MonoBehaviour
     private GameObject _uniqueEnemyPrefab;
 
     [SerializeField]
+    private GameObject _enemy4Prefab;
+
+    [SerializeField]
     private GameObject _enemyContainer;
 
     [SerializeField]
@@ -37,7 +40,7 @@ public class SpawnManager : MonoBehaviour
 
     private void Start()
     {
-        _moveTowardsEnemyWaitTime = Random.Range(5f, 10f);
+        _moveTowardsEnemyWaitTime = Random.Range(45f, 55f);
     }
     public void StartSpawning()
     {
@@ -49,18 +52,30 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnDestructiveLaserRoutine());
         StartCoroutine(SpawnMoveTowardsEnemyRoutine());
         StartCoroutine(SpawnUniqueEnemyRoutine());
+        StartCoroutine(SpawnEnemy4Routine());
+    }
+
+    IEnumerator SpawnEnemy4Routine()
+    {
+        yield return new WaitForSeconds(25);
+        while(_stopSpawning==false)
+        {
+            GameObject _enemy4 = Instantiate(_enemy4Prefab, new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            _enemy4.transform.parent = _enemyContainer.transform;
+            yield return new WaitForSeconds(Random.Range(25f,30f));
+        }
     }
 
     IEnumerator SpawnUniqueEnemyRoutine()
     {
-        yield return new WaitForSeconds(10);
+        yield return new WaitForSeconds(25);
         while (_stopSpawning == false)
         {
             
             GameObject newEnemy = Instantiate(_uniqueEnemyPrefab, new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
             _enemy = newEnemy.GetComponent<Enemy>();
             _enemy.EnableUniqueMovement();
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(Random.Range(25,40));
         }
         
     }

@@ -9,8 +9,7 @@ public class Enemy_Laser : MonoBehaviour
 
     void Update()
     {
-        
-            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(Vector3.down * _speed * Time.deltaTime);
         
         Destroy(gameObject,4f);
 
