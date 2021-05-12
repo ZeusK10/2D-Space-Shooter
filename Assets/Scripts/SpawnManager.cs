@@ -76,16 +76,16 @@ public class SpawnManager : MonoBehaviour
     
 
         IEnumerator SpawnEnemy5Routine()
-    {
-        yield return new WaitForSeconds(50);
-        while (_stopSpawning == false)
         {
-            GameObject _enemy5 = Instantiate(_enemy5Prefab, new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
-            _enemy5.transform.parent = _enemy5Container.transform;
+            yield return new WaitForSeconds(50);
+            while (_stopSpawning == false)
+            {
+                GameObject _enemy5 = Instantiate(_enemy5Prefab, new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+                _enemy5.transform.parent = _enemy5Container.transform;
             
-            yield return new WaitForSeconds(Random.Range(50f, 100f));
+                yield return new WaitForSeconds(Random.Range(50f, 100f));
+            }
         }
-    }
 
     IEnumerator SpawnUniqueEnemyRoutine()
     {

@@ -29,11 +29,19 @@ public class Enemy5LaserDetect : MonoBehaviour
 
     private void Start()
     {
-        player = GameObject.Find("Player").GetComponent<Player>();
-        if (player == null)
+        try
         {
-            Debug.LogError("Player is null");
+            player = GameObject.Find("Player").GetComponent<Player>();
         }
+        catch
+        {
+            if (player == null)
+            {
+                Debug.LogError("Player is null");
+            }
+        }
+        
+        
 
         _playerLoc = GameObject.Find("Player").GetComponent<Transform>();
         if (_playerLoc == null)
@@ -159,6 +167,13 @@ public class Enemy5LaserDetect : MonoBehaviour
             StartCoroutine(StopMovingRightRoutine());
             
         }
+
+        if(other.gameObject.tag=="Powerup" && other.gameObject.transform.position.y<transform.position.y)
+        {
+            _canFire = -1;
+            FireLaser();
+        }
+
     }
 
     IEnumerator StopMovingRightRoutine()
