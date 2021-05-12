@@ -17,6 +17,8 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemyContainer;
+    [SerializeField]
+    private GameObject _enemy5Container;
 
     [SerializeField]
     private GameObject _moveTowardsEnemyPrefab;
@@ -44,6 +46,7 @@ public class SpawnManager : MonoBehaviour
     {
         _moveTowardsEnemyWaitTime = Random.Range(45f, 55f);
     }
+
     public void StartSpawning()
     {
         
@@ -69,13 +72,17 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnEnemy5Routine()
+
+    
+
+        IEnumerator SpawnEnemy5Routine()
     {
         yield return new WaitForSeconds(50);
         while (_stopSpawning == false)
         {
-            GameObject _enemy4 = Instantiate(_enemy5Prefab, new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
-            _enemy4.transform.parent = _enemyContainer.transform;
+            GameObject _enemy5 = Instantiate(_enemy5Prefab, new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            _enemy5.transform.parent = _enemy5Container.transform;
+            
             yield return new WaitForSeconds(Random.Range(50f, 100f));
         }
     }

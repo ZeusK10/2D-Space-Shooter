@@ -11,7 +11,7 @@ public class Enemy_Laser : MonoBehaviour
     void Update()
     {
         transform.Translate(new Vector3(0,dir,0) * _speed * Time.deltaTime);
-        Destroy(gameObject,4f);
+        Destroy(gameObject,4);
     }
 
     public void FireUp()
@@ -34,6 +34,7 @@ public class Enemy_Laser : MonoBehaviour
                 {
                     player.Damage();
                 }
+            Destroy(gameObject);
         }
     }
 
