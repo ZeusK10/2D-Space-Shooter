@@ -631,6 +631,7 @@ MonoBehaviour:
   _enemyPrefab: {fileID: 7018361151650440086, guid: 7db7187d85164f241ac14e579d35c7d8, type: 3}
   _uniqueEnemyPrefab: {fileID: 935621358520956113, guid: 6da557cca3bafa94e9a3bd1732e4acc5, type: 3}
   _enemy4Prefab: {fileID: 7764691798008316055, guid: 619b7cffa2f7cb44ba0831daf1dda284, type: 3}
+  _enemy5Prefab: {fileID: 720657079588779025, guid: 3a0f9d9ec09df524b806230341b01509, type: 3}
   _enemyContainer: {fileID: 1063624989}
   _moveTowardsEnemyPrefab: {fileID: 2105480703897464323, guid: 42e6cd8823d664141864d6a630e66898, type: 3}
   powerups:
@@ -973,7 +974,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792567079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.9, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 1346322621}

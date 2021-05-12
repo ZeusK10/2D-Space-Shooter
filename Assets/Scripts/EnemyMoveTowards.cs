@@ -89,7 +89,6 @@ public class EnemyMoveTowards : MonoBehaviour
                 if (Vector3.Distance(transform.position, player.position) < 0.001f)
                 {
                     player.position *= -1.0f;
-
                 }
             }
             else

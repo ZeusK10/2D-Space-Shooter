@@ -12,6 +12,8 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField]
     private GameObject _enemy4Prefab;
+    [SerializeField]
+    private GameObject _enemy5Prefab;
 
     [SerializeField]
     private GameObject _enemyContainer;
@@ -53,6 +55,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnMoveTowardsEnemyRoutine());
         StartCoroutine(SpawnUniqueEnemyRoutine());
         StartCoroutine(SpawnEnemy4Routine());
+        StartCoroutine(SpawnEnemy5Routine());
     }
 
     IEnumerator SpawnEnemy4Routine()
@@ -63,6 +66,17 @@ public class SpawnManager : MonoBehaviour
             GameObject _enemy4 = Instantiate(_enemy4Prefab, new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
             _enemy4.transform.parent = _enemyContainer.transform;
             yield return new WaitForSeconds(Random.Range(75f,150f));
+        }
+    }
+
+    IEnumerator SpawnEnemy5Routine()
+    {
+        yield return new WaitForSeconds(50);
+        while (_stopSpawning == false)
+        {
+            GameObject _enemy4 = Instantiate(_enemy5Prefab, new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            _enemy4.transform.parent = _enemyContainer.transform;
+            yield return new WaitForSeconds(Random.Range(50f, 100f));
         }
     }
 
