@@ -42,5 +42,11 @@ public class enemy5 : MonoBehaviour
                 player.UpdateScore(10);
                 Destroy(transform.parent.gameObject);
             }
+            else if (other.tag == "Projectile")
+            {
+                player.UpdateScore(10);
+                Destroy(other.gameObject);
+                Destroy(transform.parent.gameObject);
+            }
         }
 }

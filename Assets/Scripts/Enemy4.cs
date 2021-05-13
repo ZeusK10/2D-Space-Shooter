@@ -108,6 +108,14 @@ public class Enemy4 : MonoBehaviour
             Destroy(this.gameObject);
                 
         }
-        
+        else if (other.tag == "Projectile")
+        {
+            player.UpdateScore(10);
+            Destroy(other.gameObject);
+            _speed = 0f;
+            _isEnemyDead = true;
+            Destroy(laser.gameObject);
+            Destroy(this.gameObject);
+        }
     }
 }

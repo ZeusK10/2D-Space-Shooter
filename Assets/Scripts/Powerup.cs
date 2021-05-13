@@ -84,6 +84,11 @@ public class Powerup : MonoBehaviour
                         player.NegativePowerup();
                         break;
 
+                    case 6:
+                        player.HomingProjectileSetActive();
+                        Debug.Log("I set projectile to active");
+                        break;
+
                     default:
                         Debug.Log("No ID detected");
                         break;

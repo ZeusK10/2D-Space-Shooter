@@ -59,6 +59,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnUniqueEnemyRoutine());
         StartCoroutine(SpawnEnemy4Routine());
         StartCoroutine(SpawnEnemy5Routine());
+        StartCoroutine(SpawnProjectilePowerupRoutine());
     }
 
     IEnumerator SpawnEnemy4Routine()
@@ -73,8 +74,15 @@ public class SpawnManager : MonoBehaviour
     }
 
 
-    
-
+    IEnumerator SpawnProjectilePowerupRoutine()
+    {
+        yield return new WaitForSeconds(100);
+        while (_stopSpawning == false)
+        {
+            Instantiate(powerups[6], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(100, 200));
+        }
+    }
         IEnumerator SpawnEnemy5Routine()
         {
             yield return new WaitForSeconds(50);

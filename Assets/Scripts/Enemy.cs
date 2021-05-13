@@ -276,6 +276,34 @@ public class Enemy : MonoBehaviour
                 }
             }
         }
+        else if(other.tag=="Projectile")
+        {
+            if (_isShieldActive == true && _isNewEnemy == true)
+            {
+                _isShieldActive = false;
+                Destroy(other.gameObject);
+                _enemyShield.SetActive(false);
+            }
+            else
+            {
+                player.UpdateScore(10);
+                Destroy(other.gameObject);
+                _speed = 0f;
+                _isEnemyDead = true;
+
+                _explosionAudio.Play();
+                Destroy(GetComponent<Collider2D>());
+                if (_isNewEnemy == false)
+                {
+                    _animation.SetTrigger("IsEnemyDead");
+                    Destroy(this.gameObject, 2.8f);
+                }
+                else
+                {
+                    Destroy(this.gameObject);
+                }
+            }
+        }
     }
 
 

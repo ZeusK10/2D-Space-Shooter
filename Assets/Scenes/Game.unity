@@ -672,6 +672,7 @@ MonoBehaviour:
   - {fileID: 3901623063958615146, guid: dd6a3b350fa6f3b439c263a2382eebfa, type: 3}
   - {fileID: 1744490759355800283, guid: 984976198ef04be4c9b79b1e6042d5fa, type: 3}
   - {fileID: 3787008753342150739, guid: 3588d84026ee40f4dab43dc57c76ba7a, type: 3}
+  - {fileID: 6096754609812365091, guid: 6ea70674ff5809346a8a42166c068f24, type: 3}
   _waveText: {fileID: 552486026}
   _waveTime: 0
   _spawnWaitTime: 5
@@ -935,6 +936,7 @@ MonoBehaviour:
   _thruster: {fileID: 195278720}
   _ammo: 15
   _destructiveLaser: {fileID: 505309288}
+  _homingProjectilePrefab: {fileID: 989258447564509603, guid: c42def8c152571f46ab8f174ece7bede, type: 3}
   _laserPrefab: {fileID: 2200135332110336469, guid: 44460239d0b9f8f4d9e926d316064e9f, type: 3}
   _tripleShotPrefab: {fileID: 5615600096915091384, guid: 89251dd7a1c7dde4585790e6e827b08f, type: 3}
   _spawnManager: {fileID: 238473116}
@@ -1006,7 +1008,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792567079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.4, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 1346322621}
@@ -2785,7 +2787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6890070874157993838, guid: d3518d39b1031b54fb56b809f2f0e640, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3518d39b1031b54fb56b809f2f0e640, type: 3}

@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
     private GameObject _destructiveLaser;
 
     [SerializeField]
+    private GameObject _homingProjectilePrefab;
+    private int _homingProjectileShot = 0;
+
+    [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
@@ -55,6 +59,7 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.5f;
     private float _canFire = 0.0f;
     private int _score;
+    private bool _isHomingProjectileActive;
 
     [SerializeField]
     private GameObject _playerHurtRight;
@@ -109,9 +114,22 @@ public class Player : MonoBehaviour
         {
             if(_ammo>0 && _isDestructiveLaserActive==false)
             {
-                FireLaser();
+                 FireLaser();
             }
             
+        }
+
+        if(Input.GetKeyDown(KeyCode.X))
+        {
+            if (_isHomingProjectileActive == true && _homingProjectileShot < 3)
+            {
+                FireHomingProjectile();
+            }
+        }
+
+        if(_homingProjectileShot==3)
+        {
+            _isHomingProjectileActive = false;
         }
         
     }
@@ -181,6 +199,14 @@ public class Player : MonoBehaviour
         _ammo -= 1;
         
     }
+
+    private void FireHomingProjectile()
+    {
+        Instantiate(_homingProjectilePrefab, transform.position + new Vector3(0, 1.4f, 0), Quaternion.identity);
+        _homingProjectileShot += 1;
+    }
+
+    
 
     public void Damage()
     {
@@ -337,6 +363,11 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         _speed *= 2;
+    }
+
+    public void HomingProjectileSetActive()
+    {
+        _isHomingProjectileActive = true;
     }
 }
 
