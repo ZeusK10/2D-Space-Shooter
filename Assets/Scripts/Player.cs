@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private GameObject _homingProjectilePrefab;
-    private int _homingProjectileShot = 0;
+    private int _homingProjectileShot = 3;
 
     [SerializeField]
     private GameObject _laserPrefab;
@@ -121,13 +121,13 @@ public class Player : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.X))
         {
-            if (_isHomingProjectileActive == true && _homingProjectileShot < 3)
+            if (_isHomingProjectileActive == true && _homingProjectileShot >0)
             {
                 FireHomingProjectile();
             }
         }
 
-        if(_homingProjectileShot==3)
+        if(_homingProjectileShot==0)
         {
             _isHomingProjectileActive = false;
         }
@@ -203,7 +203,8 @@ public class Player : MonoBehaviour
     private void FireHomingProjectile()
     {
         Instantiate(_homingProjectilePrefab, transform.position + new Vector3(0, 1.4f, 0), Quaternion.identity);
-        _homingProjectileShot += 1;
+        _homingProjectileShot -= 1;
+        _uIManager.UpdatePlayerMissiles(_homingProjectileShot);
     }
 
     
@@ -368,6 +369,8 @@ public class Player : MonoBehaviour
     public void HomingProjectileSetActive()
     {
         _isHomingProjectileActive = true;
+        _homingProjectileShot = 3;
+        _uIManager.UpdatePlayerMissiles(_homingProjectileShot);
     }
 }
 

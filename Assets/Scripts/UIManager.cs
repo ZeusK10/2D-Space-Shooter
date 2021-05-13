@@ -25,6 +25,9 @@ public class UIManager : MonoBehaviour
     private bool _isGameOver;
     [SerializeField]
     private Text _waveText;
+
+    [SerializeField]
+    private Text _missileText;
    
     // Start is called before the first frame update
     void Start()
@@ -32,6 +35,7 @@ public class UIManager : MonoBehaviour
         _scoreText.text = "Score: 0";
         _ammoText.text = "15/15";
         _waveText.text = "";
+        _missileText.text = "Missiles: 0/3";
     }
 
     private void Update()
@@ -50,6 +54,11 @@ public class UIManager : MonoBehaviour
     public void UpdatePlayerScore(int playerScore)
     {
         _scoreText.text = "Score: " + playerScore;
+    }
+
+    public void UpdatePlayerMissiles(int missilecount)
+    {
+        _missileText.text = "Missiles: " + missilecount;
     }
 
     public void UpdatePlayerAmmo(int ammo)
