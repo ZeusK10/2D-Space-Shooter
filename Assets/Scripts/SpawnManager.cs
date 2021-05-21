@@ -30,6 +30,7 @@ public class SpawnManager : MonoBehaviour
 
     [SerializeField]
     private UIManager _waveText;
+    [SerializeField]
     private int _waveNumber = 1;
     
     [SerializeField]
@@ -38,15 +39,22 @@ public class SpawnManager : MonoBehaviour
     private float _spawnWaitTime=5f;
 
     private bool _stopSpawning = false;
+    public bool _isPlayerAlive = true;
 
     private Enemy _enemy;
 
+    [SerializeField]
+    private GameObject sideBossEnemyPrefab;
+    [SerializeField]
+    private GameObject _mainBossPrefab;
+    private int a = 0;
 
     private void Start()
     {
         _moveTowardsEnemyWaitTime = Random.Range(45f, 55f);
     }
 
+    
     public void StartSpawning()
     {
         
@@ -165,6 +173,16 @@ public class SpawnManager : MonoBehaviour
                 _waveNumber++;
                 
             }
+
+            if(_waveNumber==5)
+            {
+                StartFinalBossFight();
+            }
+
+            if(_waveNumber==4 && a==0)
+            {
+                StartCoroutine(StartBossFightRoutine());
+            }
             yield return new WaitForSeconds(_spawnWaitTime);
         }
     }
@@ -212,7 +230,23 @@ public class SpawnManager : MonoBehaviour
     public void OnPlayerDeath()
     {
         _stopSpawning = true;
-        
+        _isPlayerAlive = false;
     }
 
+    private void StartFinalBossFight()
+    {
+        _stopSpawning = true;
+        Instantiate(_mainBossPrefab, new Vector3(0, 9, 0), Quaternion.identity);
+    }
+
+    IEnumerator StartBossFightRoutine()
+    {
+        a = 1;
+        yield return new WaitForSeconds(3);
+        while(_stopSpawning==false)
+        {
+            Instantiate(sideBossEnemyPrefab, new Vector3(Random.Range(-9.5f, 9.5f), 8, 0), Quaternion.identity);
+            yield return new WaitForSeconds(5);
+        }
+    }
 }

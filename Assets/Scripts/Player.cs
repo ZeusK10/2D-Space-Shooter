@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed;
 
+    public bool _isPlayerAlive = true;
+
     [SerializeField]
     private GameObject _thruster;
 
@@ -243,16 +245,12 @@ public class Player : MonoBehaviour
             }
 
             _uIManager.UpdatePlayerLives(_Lives);
-            if (_Lives == 0)
+            if (_Lives <= 0)
             {
+                _isPlayerAlive = false;
                 _spawnManager.OnPlayerDeath();
                 _cameraShake.GameOver();
                 Destroy(this.gameObject);
-            }
-            else if(_Lives<0)
-            {
-                _spawnManager.OnPlayerDeath();
-                Debug.Log("Player is dead");
             }
         }
         

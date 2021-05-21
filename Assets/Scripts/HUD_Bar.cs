@@ -8,13 +8,14 @@ public class HUD_Bar : MonoBehaviour
     private float _maxSpeedTime = 100f;
     private float _currentSpeedTime = 100f;
     private Player player;
+    private GameObject playerObj;
 
     private void Start()
     {
-        player = GameObject.Find("Player").GetComponent<Player>();
-        if (player == null)
+        playerObj = GameObject.Find("Player");
+        if (playerObj != null)
         {
-            Debug.Log("Player is null");
+            player=playerObj.GetComponent<Player>();
         }
     }
 

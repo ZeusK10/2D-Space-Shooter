@@ -14,6 +14,9 @@ public class UIManager : MonoBehaviour
     private Text _ammoText;
 
     [SerializeField]
+    private GameObject _winnerText;
+
+    [SerializeField]
     private Sprite[] _livesSprite;
     [SerializeField]
     private Image _spriteImage;
@@ -42,6 +45,7 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver)
         {
+            Time.timeScale = 1.0f;
             SceneManager.LoadScene(1);
         }
 
@@ -80,6 +84,14 @@ public class UIManager : MonoBehaviour
     {
         _waveText.text = "Wave " + waveNumber;
         StartCoroutine(WaveRoutine());
+    }
+
+    public void GameWon()
+    {
+        _winnerText.SetActive(true);
+        Time.timeScale = 0.0f;
+        _restartMessage.SetActive(true);
+        _isGameOver = true;
     }
 
     IEnumerator WaveRoutine()
