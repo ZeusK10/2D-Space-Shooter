@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     private GameObject _thruster;
 
     [SerializeField]
-    private int _ammo = 15;
+    private int _ammo = 30;
 
     private Animator _animation;
 
@@ -282,7 +282,7 @@ public class Player : MonoBehaviour
 
     public void AmmoPowerup()
     {
-        _ammo = 15;
+        _ammo = 30;
     }
 
     public void HealthPowerup()

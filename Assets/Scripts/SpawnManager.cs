@@ -122,9 +122,9 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(45.0f, 65.0f));
         while (_stopSpawning == false)
         {
-            
+            int rnd = Random.Range(45, 65);
             Instantiate(powerups[4], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(45.0f, 65.0f));
+            yield return new WaitForSeconds(rnd);
         }
     }
 
@@ -192,9 +192,8 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(15.0f, 25.0f));
         while (_stopSpawning==false)
         {
-            
             Instantiate(powerups[2], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(15.0f, 25.0f));
+            yield return new WaitForSeconds(Random.Range(20.0f, 35.0f));
         }
     }
 
@@ -221,8 +220,15 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(9f);
         while (_stopSpawning == false)
         { 
-            int powerupID = Random.Range(0, 2);
-            Instantiate(powerups[powerupID], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            if(Random.Range(0,5)==0)
+            {
+                Instantiate(powerups[1], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(powerups[0], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
+            }
+
             yield return new WaitForSeconds(Random.Range(5.0f, 9.0f));
         }
     }

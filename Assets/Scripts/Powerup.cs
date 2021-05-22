@@ -86,7 +86,6 @@ public class Powerup : MonoBehaviour
 
                     case 6:
                         player.HomingProjectileSetActive();
-                        Debug.Log("I set projectile to active");
                         break;
 
                     default:

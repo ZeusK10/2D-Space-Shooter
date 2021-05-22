@@ -36,9 +36,9 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         _scoreText.text = "Score: 0";
-        _ammoText.text = "15/15";
+        _ammoText.text = "30/30";
         _waveText.text = "";
-        _missileText.text = "Missiles: 0/3";
+        _missileText.text = "0/3";
     }
 
     private void Update()
@@ -62,12 +62,12 @@ public class UIManager : MonoBehaviour
 
     public void UpdatePlayerMissiles(int missilecount)
     {
-        _missileText.text = "Missiles: " + missilecount;
+        _missileText.text = missilecount+"/3";
     }
 
     public void UpdatePlayerAmmo(int ammo)
     {
-        _ammoText.text = ammo+"/15";
+        _ammoText.text = ammo+"/30";
     }
 
     public void UpdatePlayerLives(int playerLife)
