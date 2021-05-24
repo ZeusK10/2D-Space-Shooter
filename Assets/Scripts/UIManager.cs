@@ -28,17 +28,19 @@ public class UIManager : MonoBehaviour
     private bool _isGameOver;
     [SerializeField]
     private Text _waveText;
+    [SerializeField]
+    private Text _levelText;
 
     [SerializeField]
     private Text _missileText;
    
-    // Start is called before the first frame update
     void Start()
     {
         _scoreText.text = "Score: 0";
         _ammoText.text = "30/30";
         _waveText.text = "";
         _missileText.text = "0/3";
+        _levelText.text = "Level 1";
     }
 
     private void Update()
@@ -82,7 +84,8 @@ public class UIManager : MonoBehaviour
 
     public void UpdateWave(int waveNumber)
     {
-        _waveText.text = "Wave " + waveNumber;
+        _waveText.text = "Level " + (waveNumber+1);
+        _levelText.text = "Level " + (waveNumber + 1);
         StartCoroutine(WaveRoutine());
     }
 

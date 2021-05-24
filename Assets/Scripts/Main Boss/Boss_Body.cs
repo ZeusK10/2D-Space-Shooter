@@ -10,7 +10,7 @@ public class Boss_Body : MonoBehaviour
 
     [SerializeField]
     private GameObject _laserPrefab;
-
+    private GameObject _laserRef;
     private UIManager _uiManager;
     private Player player;
     private void Start()
@@ -35,6 +35,7 @@ public class Boss_Body : MonoBehaviour
         {
             _uiManager.GameWon();
             Destroy(transform.parent.gameObject);
+            Destroy(_laserRef);
         }
     }
 
@@ -52,7 +53,7 @@ public class Boss_Body : MonoBehaviour
         yield return new WaitForSeconds(3);
         while (player._isPlayerAlive)
         {
-            Instantiate(_laserPrefab, new Vector3(transform.position.x, transform.position.y + (-1), 0), Quaternion.identity);
+            _laserRef = Instantiate(_laserPrefab, new Vector3(transform.position.x, transform.position.y + (-1), 0), Quaternion.identity);
 
             yield return new WaitForSeconds(7);
         }

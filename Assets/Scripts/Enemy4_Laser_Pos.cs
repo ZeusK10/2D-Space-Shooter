@@ -9,7 +9,15 @@ public class Enemy4_Laser_Pos : MonoBehaviour
 
     void Update()
     {
-        transform.position = _enemy.transform.position;
+        try
+        {
+            transform.position = _enemy.transform.position;
+        }
+        catch
+        {
+            Debug.Log("Enemy is dead");
+        }
+        
     }
 
     IEnumerator ScaleRoutine()

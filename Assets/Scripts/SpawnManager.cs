@@ -220,7 +220,7 @@ public class SpawnManager : MonoBehaviour
         yield return new WaitForSeconds(9f);
         while (_stopSpawning == false)
         { 
-            if(Random.Range(0,5)==0)
+            if(Random.Range(0,5)==3)
             {
                 Instantiate(powerups[1], new Vector3(Random.Range(-9.0f, 9.0f), 9, 0), Quaternion.identity);
             }
